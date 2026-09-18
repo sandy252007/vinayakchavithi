@@ -70,6 +70,151 @@
             background: #333;
         }
 
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ff9800;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            background: #f57c00;
+        }
+
+        .chatbot-window {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: #ff9800;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background: #e0e0e0;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: #ff9800;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chatbot-input:focus {
+            border-color: #ff9800;
+        }
+
+        .chatbot-send {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .chatbot-send:hover {
+            background: #f57c00;
+        }
+
+        .quick-questions {
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+
+        .quick-questions-title {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .quick-btn {
+            display: inline-block;
+            margin: 3px;
+            padding: 5px 10px;
+            background: #fff3e0;
+            border: 1px solid #ff9800;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #ff9800;
+        }
+
+        .quick-btn:hover {
+            background: #ff9800;
+            color: white;
+        }
     </style>
 
 </head>
@@ -95,6 +240,32 @@
         Download Image
     </button>
 
+</div>
+
+<!-- Chatbot -->
+<div class="chatbot-container">
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            Ganapathi FAQ Bot 🙏
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm here to answer your questions about Lord Ganapathi and this artwork. Ask me anything!
+            </div>
+        </div>
+        <div class="quick-questions">
+            <div class="quick-questions-title">Quick Questions:</div>
+            <button class="quick-btn" onclick="askQuestion('What is Vinayaka Chavithi?')">Vinayaka Chavithi?</button>
+            <button class="quick-btn" onclick="askQuestion('Who is Ganapathi?')">Who is Ganapathi?</button>
+            <button class="quick-btn" onclick="askQuestion('What are the symbols?')">Symbols?</button>
+            <button class="quick-btn" onclick="askQuestion('How to celebrate?')">Celebration?</button>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button class="chatbot-send" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
 </div>
 
 
@@ -559,6 +730,158 @@ function downloadImage() {
         canvas.toDataURL("image/png");
 
     link.click();
+}
+
+// Chatbot FAQ Database
+const faqDatabase = [
+    {
+        keywords: ["vinayaka", "chavithi", "ganesh chaturthi", "festival", "celebration"],
+        question: "What is Vinayaka Chavithi?",
+        answer: "Vinayaka Chavithi (also known as Ganesh Chaturthi) is a Hindu festival celebrating the birth of Lord Ganesha, the elephant-headed deity. It typically falls in August or September. Devotees bring Ganesha idols home, perform prayers (puja), offer modak (sweet dumplings), and immerse the idol in water after 10 days."
+    },
+    {
+        keywords: ["ganapathi", "ganesha", "ganpati", "who is", "deity", "god"],
+        question: "Who is Ganapathi?",
+        answer: "Lord Ganapathi (Ganesha) is one of the most worshipped Hindu deities. He is the son of Lord Shiva and Goddess Parvati, with an elephant head symbolizing wisdom. He is known as the 'Remover of Obstacles' (Vighnaharta) and is invoked at the start of any new venture. His vehicle is a mouse, and he loves modak sweets."
+    },
+    {
+        keywords: ["symbol", "meaning", "represent", "trunk", "elephant", "head", "mouse", "modak"],
+        question: "What are the symbols in this artwork?",
+        answer: "This line drawing shows Lord Ganesha with: 🐘 Elephant head (wisdom & intelligence), 📿 Large ears (listen more, talk less), 👃 Long trunk (adaptability), 💎 Tusks (strength), 🍬 Modak in hand (reward of spiritual pursuit), 🐭 Mouse vehicle (humility), 👑 Crown (divine status), and Multiple arms (omnipotence)."
+    },
+    {
+        keywords: ["celebrate", "how to", "perform", "puja", "worship", "ritual"],
+        question: "How to celebrate Vinayaka Chavithi?",
+        answer: "To celebrate: 1) Bring a Ganesha idol home, 2) Perform Pranapratishtha (invoking life into idol), 3) Offer flowers, fruits, and modak, 4) Chant Ganapati mantras like 'Om Gam Ganapataye Namaha', 5) Perform aarti daily, 6) On the final day, immerse the idol in water with prayers 'Ganpati Bappa Morya, Pudhchya Varshi Laukar Ya' (Come back soon next year)."
+    },
+    {
+        keywords: ["modak", "sweet", "food", "offer", "like eat"],
+        question: "What food does Ganesha like?",
+        answer: "Lord Ganesha's favorite food is Modak - a sweet dumpling made of rice flour stuffed with coconut and jaggery. It's believed that offering 21 modaks during puja pleases him. Other offerings include laddu, karjikayi, and fruits like bananas."
+    },
+    {
+        keywords: ["mantra", "chant", "prayer", "slokam", "namaha"],
+        question: "What mantras can I chant?",
+        answer: "Popular Ganesha mantras: 🔹 'Om Gam Ganapataye Namaha' (Salutations to Ganesha), 🔹 'Vakratunda Mahakaya Surya Koti Samaprabha' (invocation mantra), 🔹 'Ganpati Bappa Morya' (devotional chant), 🔹 'Om Ekadantaya Vidmahe Vakratundaya Dhimahi Tanno Danti Prachodayat' (Gayatri mantra for Ganesha)."
+    },
+    {
+        keywords: ["story", "legend", "mythology", "birth", "created"],
+        question: "What is the story behind Ganesha's elephant head?",
+        answer: "According to legend, Goddess Parvati created Ganesha from turmeric paste to guard her while bathing. When Lord Shiva tried to enter, Ganesha stopped him. Angered, Shiva beheaded him. To revive him, Shiva replaced his head with that of an elephant, making him the leader of his ganas (attendants), hence 'Ganapati'."
+    },
+    {
+        keywords: ["canvas", "drawing", "art", "how made", "created", "code"],
+        question: "How was this artwork created?",
+        answer: "This Ganesha drawing was created programmatically using HTML5 Canvas and JavaScript. The artist used geometric primitives like ellipses for the head and body, lines for contours, and arcs for curves. Each element is drawn using ctx.ellipse(), ctx.lineTo(), and ctx.arc() functions with precise coordinates."
+    },
+    {
+        keywords: ["download", "save", "image", "picture"],
+        question: "How do I save this image?",
+        answer: "Click the 'Download Image' button below the canvas to save this Ganesha artwork as a PNG file to your device. You can then print it, share it, or use it as a digital wallpaper for your devotion."
+    },
+    {
+        keywords: ["colors", "why black", "white", "line drawing"],
+        question: "Why is this a black and white line drawing?",
+        answer: "Line art represents simplicity and purity. Black lines on white background create a minimalist, meditative aesthetic focusing on form rather than color. This style also makes it easy to print, color manually, or use as a coloring page for children learning about Ganesha."
+    }
+];
+
+function getBotResponse(userQuestion) {
+    const question = userQuestion.toLowerCase();
+    
+    // Check for greetings
+    if (question.includes("hello") || question.includes("hi") || question.includes("hey")) {
+        return "Hello! 🙏 How can I help you learn about Lord Ganapathi today?";
+    }
+    
+    if (question.includes("thank")) {
+        return "You're welcome! May Lord Ganesha bless you! 🙏";
+    }
+    
+    if (question.includes("bye") || question.includes("goodbye")) {
+        return "Goodbye! Ganpati Bappa Morya! 🙏 Come back anytime!";
+    }
+    
+    // Search through FAQ database
+    let bestMatch = null;
+    let bestScore = 0;
+    
+    for (const faq of faqDatabase) {
+        let score = 0;
+        
+        // Check if any keyword matches
+        for (const keyword of faq.keywords) {
+            if (question.includes(keyword)) {
+                score += 2;
+            }
+        }
+        
+        // Check if question words match
+        for (const word of faq.question.toLowerCase().split(" ")) {
+            if (word.length > 3 && question.includes(word)) {
+                score += 1;
+            }
+        }
+        
+        if (score > bestScore) {
+            bestScore = score;
+            bestMatch = faq;
+        }
+    }
+    
+    if (bestScore > 0) {
+        return bestMatch.answer;
+    }
+    
+    return "I'm not sure about that specific question. Try asking about Vinayaka Chavithi, Lord Ganesha's symbolism, mantras, celebrations, or how this artwork was created! 🙏";
+}
+
+function toggleChatbot() {
+    const chatWindow = document.getElementById("chatbotWindow");
+    chatWindow.classList.toggle("active");
+    
+    if (chatWindow.classList.contains("active")) {
+        setTimeout(() => {
+            document.getElementById("userInput").focus();
+        }, 300);
+    }
+}
+
+function addMessage(text, isUser = false) {
+    const messagesContainer = document.getElementById("chatMessages");
+    const messageDiv = document.createElement("div");
+    messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+    messageDiv.textContent = text;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const userText = input.value.trim();
+    
+    if (!userText) return;
+    
+    addMessage(userText, true);
+    input.value = "";
+    
+    // Simulate bot response delay
+    setTimeout(() => {
+        const botResponse = getBotResponse(userText);
+        addMessage(botResponse, false);
+    }, 500);
+}
+
+function askQuestion(question) {
+    const input = document.getElementById("userInput");
+    input.value = question;
+    sendMessage();
+}
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
 }
 
 </script>
