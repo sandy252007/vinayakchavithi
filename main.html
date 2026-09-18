@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ganapathi - HTML & JavaScript</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #eeeeee;
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+
+        p {
+            margin-top: 5px;
+            color: #555;
+        }
+
+
+
+        canvas {
+            background: white;
+
+            border: 2px solid black;
+
+            width: 400px;
+            height: 500px;
+
+            max-width: 90vw;
+        }
+
+        button {
+            margin-top: 15px;
+
+            padding: 12px 25px;
+
+            background: black;
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>🙏 Ganapathi 🙏</h1>
+
+    <p>Created using HTML + JavaScript</p>
+
+    <canvas
+        id="ganapathiCanvas"
+        width="800"
+        height="1000">
+    </canvas>
+
+    <br>
+
+    <button onclick="downloadImage()">
+        Download Image
+    </button>
+
+</div>
+
+
+<script>
+
+const canvas =
+    document.getElementById("ganapathiCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+
+
+ctx.strokeStyle = "black";
+
+ctx.fillStyle = "white";
+
+ctx.lineWidth = 5;
+
+ctx.lineCap = "round";
+
+ctx.lineJoin = "round";
+
+
+
+function ellipse(x, y, width, height) {
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x + width / 2,
+        y + height / 2,
+        width / 2,
+        height / 2,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+}
+
+
+function line(points, width = 5) {
+
+    ctx.beginPath();
+
+    ctx.lineWidth = width;
+
+    ctx.moveTo(
+        points[0][0],
+        points[0][1]
+    );
+
+    for (
+        let i = 1;
+        i < points.length;
+        i++
+    ) {
+
+        ctx.lineTo(
+            points[i][0],
+            points[i][1]
+        );
+
+    }
+
+    ctx.stroke();
+}
+
+
+function filledEllipse(
+    x,
+    y,
+    width,
+    height
+) {
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x + width / 2,
+        y + height / 2,
+        width / 2,
+        height / 2,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle = "black";
+
+    ctx.fill();
+
+    ctx.fillStyle = "white";
+}
+
+
+
+
+ellipse(
+    270,
+    220,
+    260,
+    290
+);
+
+
+
+ellipse(
+    350,
+    120,
+    100,
+    100
+);
+
+line([
+    [300, 220],
+    [330, 160],
+    [400, 115],
+    [470, 160],
+    [500, 220]
+], 5);
+
+
+
+
+line([
+    [285, 270],
+    [200, 220],
+    [100, 300],
+    [150, 440],
+    [275, 390]
+], 6);
+
+line([
+    [270, 285],
+    [200, 260],
+    [135, 310],
+    [170, 385]
+], 4);
+
+
+
+
+line([
+    [515, 270],
+    [600, 220],
+    [700, 300],
+    [650, 440],
+    [525, 390]
+], 6);
+
+line([
+    [530, 285],
+    [600, 260],
+    [665, 310],
+    [630, 385]
+], 4);
+
+
+
+filledEllipse(
+    325,
+    300,
+    40,
+    60
+);
+
+filledEllipse(
+    435,
+    300,
+    40,
+    60
+);
+
+
+
+
+ctx.beginPath();
+
+ctx.arc(
+    345,
+    310,
+    40,
+    Math.PI,
+    Math.PI * 2
+);
+
+ctx.stroke();
+
+
+ctx.beginPath();
+
+ctx.arc(
+    455,
+    310,
+    40,
+    Math.PI,
+    Math.PI * 2
+);
+
+ctx.stroke();
+
+
+
+
+line([
+    [400, 235],
+    [385, 275],
+    [400, 310],
+    [415, 275],
+    [400, 235]
+], 5);
+
+
+
+line([
+    [350, 350],
+    [345, 420],
+    [350, 500],
+    [370, 570],
+    [410, 620],
+    [460, 630],
+    [500, 610],
+    [520, 570]
+], 8);
+
+line([
+    [440, 350],
+    [445, 420],
+    [450, 500],
+    [460, 550],
+    [480, 580],
+    [510, 585],
+    [530, 560]
+], 8);
+
+
+
+
+ctx.beginPath();
+
+ctx.arc(
+    500,
+    545,
+    35,
+    0,
+    Math.PI * 1.6
+);
+
+ctx.stroke();
+
+
+
+
+ellipse(
+    280,
+    480,
+    240,
+    280
+);
+
+
+
+ellipse(
+    150,
+    500,
+    120,
+    160
+);
+
+
+
+
+line([
+    [175, 530],
+    [175, 455]
+], 5);
+
+line([
+    [200, 520],
+    [200, 440]
+], 5);
+
+line([
+    [225, 525],
+    [225, 455]
+], 5);
+
+line([
+    [250, 540],
+    [250, 475]
+], 5);
+
+
+
+ellipse(
+    530,
+    500,
+    120,
+    160
+);
+
+
+line([
+    [555, 535],
+    [555, 465]
+], 5);
+
+line([
+    [580, 525],
+    [580, 445]
+], 5);
+
+line([
+    [605, 535],
+    [605, 460]
+], 5);
+
+line([
+    [630, 550],
+    [630, 480]
+], 5);
+
+
+
+line([
+    [550, 510],
+    [575, 445],
+    [600, 510]
+], 5);
+
+line([
+    [560, 490],
+    [575, 460],
+    [590, 490]
+], 4);
+
+
+
+ellipse(
+    130,
+    650,
+    250,
+    170
+);
+
+
+
+ellipse(
+    420,
+    650,
+    250,
+    170
+);
+
+
+
+ellipse(
+    300,
+    760,
+    100,
+    90
+);
+
+ellipse(
+    400,
+    760,
+    100,
+    90
+);
+
+
+
+
+line([
+    [400, 920],
+    [365, 875],
+    [400, 900],
+    [435, 875],
+    [400, 920]
+], 4);
+
+
+
+
+line([
+    [385, 915],
+    [330, 875],
+    [345, 925],
+    [400, 940]
+], 4);
+
+
+
+
+line([
+    [415, 915],
+    [470, 875],
+    [455, 925],
+    [400, 940]
+], 4);
+
+
+
+ctx.beginPath();
+
+ctx.arc(
+    170,
+    900,
+    80,
+    Math.PI,
+    Math.PI * 1.6
+);
+
+ctx.stroke();
+
+
+ctx.beginPath();
+
+ctx.arc(
+    630,
+    900,
+    80,
+    Math.PI * 1.4,
+    Math.PI * 2
+);
+
+ctx.stroke();
+
+
+
+
+ctx.font =
+    "bold 24px Arial";
+
+ctx.textAlign =
+    "center";
+
+ctx.fillStyle =
+    "black";
+
+ctx.fillText(
+    "Ganapathi",
+    400,
+    975
+);
+
+
+
+function downloadImage() {
+
+    const link =
+        document.createElement("a");
+
+    link.download =
+        "ganapathi-html-javascript.png";
+
+    link.href =
+        canvas.toDataURL("image/png");
+
+    link.click();
+}
+
+</script>
+
+</body>
+</html>
